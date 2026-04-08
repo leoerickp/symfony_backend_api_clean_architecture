@@ -24,10 +24,16 @@ abstract class BaseRepositoryDoctrine extends ServiceEntityRepository implements
 
     public function findAll(): array
     {
-        return $this->createQueryBuilder('p')
-            ->orderBy('p.id', 'ASC')
-            ->getQuery()
-            ->getResult();
+        try {
+            //code...
+            return $this->createQueryBuilder('p')
+                ->orderBy('p.id', 'ASC')
+                ->getQuery()
+                ->getResult();
+        } catch (\Throwable $th) {
+            //throw $th;
+            dd($th->getMessage());
+        }
     }
 
     public function findAllByPage(

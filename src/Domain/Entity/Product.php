@@ -34,14 +34,14 @@ class Product extends Base
      * Summary of sizes
      * @var string[]
      */
-    #[ORM\Column(type: 'json', nullable: true)]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     private ?array $sizes = null;
 
     /**
      * Summary of tags
-     * @var string[]
+     * @var string[]|null
      */
-    #[ORM\Column(type: 'json', nullable: true)]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     private ?array $tags = null;
 
     /**
