@@ -1,15 +1,17 @@
 <?php
-namespace App\Service;
+
+namespace App\Application\UseCase\Product;
 
 use App\Domain\Repository\ProductRepository;
 
-class ProductService
+class FindAllProductsUseCase
 {
     public function __construct(
         private ProductRepository $productRepository,
     ) {
     }
-    public function findAllProducts()
+
+    public function execute(): array
     {
         return $this->productRepository->findAll();
     }

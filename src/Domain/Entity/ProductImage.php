@@ -2,12 +2,11 @@
 
 namespace App\Domain\Entity;
 
-use App\Domain\Repository\ProductImageRepository;
 use App\Domain\Entity\Base;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
-#[ORM\Entity(repositoryClass: ProductImageRepository::class)]
+#[ORM\Entity]
 class ProductImage extends Base
 {
 

@@ -4,8 +4,9 @@ namespace App\Infrastructure\Controller;
 
 use App\Application\Dto\CreateUserDto;
 use App\Application\Dto\LoginUserDto;
-use App\Service\AuthService;
+use App\Application\UseCase\User\CreateUserUseCase;
 use App\Infrastructure\Http\Response\SuccessResponse;
+use App\Application\UseCase\Auth\LoginUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,21 +16,22 @@ final class AuthController extends AbstractController
 {
     public function __construct(
         private SerializerInterface $serializer,
-        private readonly AuthService $authService
+        private readonly LoginUseCase $loginUseCase,
+        private readonly CreateUserUseCase $createUserUseCase
     ) {
     }
 
     #[Route('/api/auth/register', name: 'app_auth_register', methods: ['POST'])]
     public function register(CreateUserDto $createUserDto): JsonResponse
     {
-        $loggedUser = $this->authService->create($createUserDto->getFullName(), $createUserDto->getEmail(), $createUserDto->getPassword());
-        return new SuccessResponse($this->serializer, $loggedUser);
+        $authenticatedUser = $this->createUserUseCase->execute($createUserDto->getFullName(), $createUserDto->getEmail(), $createUserDto->getPassword());
+        return new SuccessResponse($this->serializer, $authenticatedUser);
     }
 
     #[Route('/api/auth/login', name: 'app_auth_login', methods: ['POST'])]
     public function login(LoginUserDto $loginUserDto): JsonResponse
     {
-        $loggerUser = $this->authService->login($loginUserDto->getEmail(), $loginUserDto->getPassword());
-        return new SuccessResponse($this->serializer, $loggerUser);
+        $authenticatedUser = $this->loginUseCase->execute($loginUserDto->getEmail(), $loginUserDto->getPassword());
+        return new SuccessResponse($this->serializer, $authenticatedUser);
     }
 }
