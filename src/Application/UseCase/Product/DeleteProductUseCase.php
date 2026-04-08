@@ -6,7 +6,8 @@ use App\Domain\Repository\ProductRepository;
 use App\Application\Exception\NotFoundException;
 use App\Domain\Entity\Product;
 
-class FindProductByIdUseCase
+
+class DeleteProductUseCase
 {
     public function __construct(
         private ProductRepository $productRepository,
@@ -25,6 +26,7 @@ class FindProductByIdUseCase
         if (!$product) {
             throw new NotFoundException('Product not found');
         }
+        $this->productRepository->remove($product, true);
         return $product;
     }
 }

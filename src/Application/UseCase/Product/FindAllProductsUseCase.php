@@ -3,6 +3,7 @@
 namespace App\Application\UseCase\Product;
 
 use App\Domain\Repository\ProductRepository;
+use App\Domain\Entity\Product;
 
 class FindAllProductsUseCase
 {
@@ -11,6 +12,9 @@ class FindAllProductsUseCase
     ) {
     }
 
+    /**
+     * @return list<Product>
+     */
     public function execute(): array
     {
         return $this->productRepository->findAll();

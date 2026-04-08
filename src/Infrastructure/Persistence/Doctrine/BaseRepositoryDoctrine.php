@@ -29,6 +29,26 @@ abstract class BaseRepositoryDoctrine extends ServiceEntityRepository implements
             ->getResult();
     }
 
+    public function findAllByPage(
+        int $page = 1,
+        int $limit = 10,
+        string $orderBy = 'id',
+        string $order = 'ASC',
+        ?string $filterField = null,
+        ?string $filterValue = null,
+    ): array {
+        $qb = $this->createQueryBuilder('p');
+        if (!empty($filterValue) && !empty($filterField)) {
+            $qb->andWhere('LOWER(p.' . $filterField . ') LIKE LOWER(:filterValue)')
+                ->setParameter('filterValue', '%' . $filterValue . '%');
+        }
+        return $qb->orderBy('p.' . $orderBy, $order)
+            ->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findById(string $id): ?object
     {
         return $this->createQueryBuilder('p')
