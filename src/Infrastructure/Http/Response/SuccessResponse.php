@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Infrastructure\Http\Response;
+
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
+
+class SuccessResponse extends JsonResponse
+{
+    public function __construct(
+        SerializerInterface $serializer,
+        mixed $data = null,
+        array $meta = [],
+        int $status = 200
+    ) {
+        $json = $serializer->serialize([
+            'success' => true,
+            'statusCode' => $status,
+            'data' => $data,
+            'meta' => $meta
+        ], 'json');
+        parent::__construct($json, $status, [], true);
+    }
+}
