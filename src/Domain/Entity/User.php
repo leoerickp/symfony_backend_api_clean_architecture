@@ -112,6 +112,16 @@ class User extends Base implements UserInterface, PasswordAuthenticatedUserInter
         return $data;
     }
 
+    static function create(string $fullName, string $email, string $password): self
+    {
+        $user = new self();
+        $user->setFullName($fullName);
+        $user->setEmail($email);
+        $user->setPassword($password);
+        $user->setRoles(['ROLE_USER']);
+        return $user;
+    }
+
     #[\Deprecated]
     public function eraseCredentials(): void
     {

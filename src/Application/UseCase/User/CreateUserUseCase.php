@@ -5,28 +5,21 @@ namespace App\Application\UseCase\User;
 use App\Domain\Entity\User;
 use App\Domain\Repository\UserRepository;
 use App\Domain\Security\TokenGenerator;
+use App\Domain\Security\PasswordHasher;
 use App\Application\Dto\UserResponseDto;
-use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-
 
 class CreateUserUseCase
 {
     public function __construct(
         private UserRepository $userRepository,
-        private PasswordHasherFactoryInterface $passwordHasherFactory,
-        private JWTTokenManagerInterface $jwtManager,
+        private PasswordHasher $passwordHasher,
         private TokenGenerator $tokenGenerator,
     ) {
     }
 
     public function execute(string $fullName, string $email, string $password): array
     {
-        $user = new User();
-        $user->setFullName($fullName);
-        $user->setEmail($email);
-        $user->setPassword($this->passwordHasherFactory->getPasswordHasher(User::class)->hash($password));
-        $user->setRoles(['ROLE_USER']);
+        $user = User::create($fullName, $email, $this->passwordHasher->hash($password));
 
         $this->userRepository->save($user, true);
 

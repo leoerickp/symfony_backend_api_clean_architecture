@@ -2,9 +2,11 @@
 
 namespace App\Infrastructure\Http\Listener;
 
-use App\Infrastructure\Http\Exception\ValidationException;
+use App\Application\Exception\ValidationException;
+use App\Application\Exception\NotFoundException;
 use App\Infrastructure\Http\Response\ErrorResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpFoundation\Response;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 
@@ -18,7 +20,16 @@ class ExceptionListener
             $event->setResponse(new ErrorResponse(
                 $exception->getMessage(),
                 $exception->errors,
-                400
+                Response::HTTP_BAD_REQUEST
+            ));
+            return;
+        }
+
+        if ($exception instanceof NotFoundException) {
+            $event->setResponse(new ErrorResponse(
+                'NOT_FOUND',
+                [$exception->getMessage()],
+                Response::HTTP_NOT_FOUND
             ));
             return;
         }

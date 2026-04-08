@@ -11,7 +11,6 @@ use Doctrine\ORM\EntityManagerInterface;
  * @template T of object
  * @extends ServiceEntityRepository<T>
  */
-
 abstract class BaseRepositoryDoctrine extends ServiceEntityRepository implements BaseRepository
 {
     protected EntityManagerInterface $entityManager;

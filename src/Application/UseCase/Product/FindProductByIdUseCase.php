@@ -3,7 +3,7 @@
 namespace App\Application\UseCase\Product;
 
 use App\Domain\Repository\ProductRepository;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Application\Exception\NotFoundException;
 
 class FindProductByIdUseCase
 {
@@ -16,7 +16,7 @@ class FindProductByIdUseCase
     {
         $product = $this->productRepository->findById($id);
         if (!$product) {
-            throw new NotFoundHttpException('Product not found');
+            throw new NotFoundException('Product not found');
         }
         return $product;
     }
