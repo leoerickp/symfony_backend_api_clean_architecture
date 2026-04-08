@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @template T of object
+ * @implements BaseRepository<T>
  * @extends ServiceEntityRepository<T>
  */
 abstract class BaseRepositoryDoctrine extends ServiceEntityRepository implements BaseRepository

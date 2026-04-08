@@ -16,6 +16,9 @@ class User extends Base implements UserInterface, PasswordAuthenticatedUserInter
     #[ORM\Column(length: 255)]
     private ?string $fullName = null;
 
+    /**
+     * @var non-empty-string
+     */
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
@@ -50,6 +53,7 @@ class User extends Base implements UserInterface, PasswordAuthenticatedUserInter
 
     public function setEmail(string $email): static
     {
+        /** @var non-empty-string $email */
         $this->email = $email;
 
         return $this;
@@ -59,10 +63,11 @@ class User extends Base implements UserInterface, PasswordAuthenticatedUserInter
      * A visual identifier that represents this user.
      *
      * @see UserInterface
+     * @return non-empty-string
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return $this->email;
     }
 
     /**

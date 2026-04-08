@@ -17,6 +17,13 @@ class CreateUserUseCase
     ) {
     }
 
+    /**
+     * Summary of execute
+     * @param string $fullName
+     * @param string $email
+     * @param string $password
+     * @return array{token: string, user: UserResponseDto}
+     */
     public function execute(string $fullName, string $email, string $password): array
     {
         $user = User::create($fullName, $email, $this->passwordHasher->hash($password));

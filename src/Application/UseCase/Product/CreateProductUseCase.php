@@ -14,6 +14,11 @@ class CreateProductUseCase
     ) {
     }
 
+    /**
+     * Summary of execute
+     * @param ProductValueObject $productValueObject
+     * @return Product|null
+     */
     public function execute(ProductValueObject $productValueObject): ?Product
     {
         $product = Product::create($productValueObject);

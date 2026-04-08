@@ -4,6 +4,10 @@ namespace App\Data;
 
 class UserData
 {
+    /**
+     * Summary of get
+     * @return array<int, array<string, mixed>>
+     */
     public static function get(): array
     {
         return [

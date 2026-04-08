@@ -14,6 +14,12 @@ class LoginUseCase
     ) {
     }
 
+    /**
+     * Summary of execute
+     * @param string $email
+     * @param string $password
+     * @return array{token: string, user: UserResponseDto}
+     */
     public function execute(string $email, string $password): array
     {
         $user = $this->userRepository->findOneByEmail($email);

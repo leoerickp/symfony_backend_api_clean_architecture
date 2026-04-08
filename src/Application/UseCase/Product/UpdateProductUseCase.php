@@ -14,6 +14,13 @@ class UpdateProductUseCase
     ) {
     }
 
+    /**
+     * Summary of execute
+     * @param string $id
+     * @param ProductValueObject $productValueObject
+     * @throws NotFoundException
+     * @return Product
+     */
     public function execute(string $id, ProductValueObject $productValueObject): ?Product
     {
         $product = $this->productRepository->findById($id);

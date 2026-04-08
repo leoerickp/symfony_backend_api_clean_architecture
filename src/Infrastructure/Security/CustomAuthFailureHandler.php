@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Security;
 
-use App\Shared\Http\Response\ErrorResponse;
+use App\Infrastructure\Http\Response\ErrorResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;

@@ -4,6 +4,10 @@ namespace App\Data;
 
 class ProductData
 {
+    /**
+     * Summary of get
+     * @return array<int, array<string, mixed>>
+     */
     public static function get(): array
     {
         return [

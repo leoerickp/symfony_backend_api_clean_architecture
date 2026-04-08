@@ -18,9 +18,9 @@ class FindAllProductsByPageUseCase
      * @param int $limit
      * @param string $orderBy
      * @param string $order
-     * @param mixed $filterField
-     * @param mixed $filterValue
-     * @return list<Product>
+     * @param string|null $filterField
+     * @param string|null $filterValue
+     * @return array<Product>
      */
     public function execute(
         int $page = 1,

@@ -13,7 +13,7 @@ class FindAllProductsUseCase
     }
 
     /**
-     * @return list<Product>
+     * @return array<Product>
      */
     public function execute(): array
     {

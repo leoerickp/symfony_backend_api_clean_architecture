@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Http\Resolver;
 
-use App\Infrastructure\Http\Exception\ValidationException;
+use App\Application\Exception\ValidationException;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -15,6 +15,13 @@ class RequestDtoResolver implements ValueResolverInterface
     ) {
     }
 
+    /**
+     * Summary of resolve
+     * @param Request $request
+     * @param ArgumentMetadata $argument
+     * @throws ValidationException
+     * @return iterable<object>
+     */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
         $type = $argument->getType();
@@ -27,7 +34,17 @@ class RequestDtoResolver implements ValueResolverInterface
             return [];
         }
 
-        $data = json_decode($request->getContent(), true);
+        $content = $request->getContent();
+
+        if (empty($content)) {
+            throw new ValidationException(['body: Request body is empty']);
+        }
+
+        $data = json_decode($content, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new ValidationException(['body: Invalid JSON: ' . json_last_error_msg()]);
+        }
 
         $dto = new $type();
 
@@ -39,23 +56,16 @@ class RequestDtoResolver implements ValueResolverInterface
             }
         }
 
-        // 🔥 VALIDACIÓN AQUÍ
         $errors = $this->validator->validate($dto);
 
         if (count($errors) > 0) {
             $formattedErrors = [];
 
             foreach ($errors as $error) {
-                $formattedErrors[] = [
-                    'field' => $error->getPropertyPath(),
-                    'message' => $error->getMessage(),
-                ];
+                $formattedErrors[] = (string) $error->getPropertyPath() . ': ' . (string) $error->getMessage();
             }
 
             throw new ValidationException($formattedErrors);
-            // throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException(
-            //     json_encode($formattedErrors)
-            // );
         }
 
         yield $dto;

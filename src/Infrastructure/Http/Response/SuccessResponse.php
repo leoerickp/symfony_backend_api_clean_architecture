@@ -7,6 +7,13 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class SuccessResponse extends JsonResponse
 {
+    /**
+     * Summary of __construct
+     * @param SerializerInterface $serializer
+     * @param mixed $data
+     * @param array<string, mixed> $meta
+     * @param int $status
+     */
     public function __construct(
         SerializerInterface $serializer,
         mixed $data = null,
