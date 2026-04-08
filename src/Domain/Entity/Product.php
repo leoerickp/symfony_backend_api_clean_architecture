@@ -3,6 +3,7 @@
 namespace App\Domain\Entity;
 
 use App\Domain\Entity\Base;
+use App\Application\ValueObject\ProductValueObject;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -171,5 +172,24 @@ class Product extends Base
         }
 
         return $this;
+    }
+
+    public static function create(ProductValueObject $productValueObject): self
+    {
+        $product = new self();
+        $product->update($productValueObject);
+        return $product;
+    }
+
+    public function update(ProductValueObject $productValueObject)
+    {
+        $this->setTitle($productValueObject->title);
+        $this->setPrice($productValueObject->price);
+        $this->setDescription($productValueObject->description);
+        $this->setSlug($productValueObject->slug);
+        $this->setStock($productValueObject->stock);
+        $this->setGender($productValueObject->gender);
+        $this->setSizes($productValueObject->sizes);
+        $this->setTags($productValueObject->tags);
     }
 }

@@ -2,12 +2,17 @@
 
 namespace App\Infrastructure\Controller;
 
+use App\Application\Dto\CreateProductRequestDto;
+use App\Application\Mapper\ProductMapper;
+use App\Application\UseCase\Product\CreateProductUseCase;
 use App\Application\UseCase\Product\FindAllProductsUseCase;
 use App\Application\UseCase\Product\FindAllProductsByPageUseCase;
 use App\Application\UseCase\Product\FindProductByIdUseCase;
 use App\Application\UseCase\Product\DeleteProductUseCase;
-use App\Infrastructure\Http\Response\SuccessResponse;
+use App\Application\UseCase\Product\UpdateProductUseCase;
 use App\Application\Dto\ProductPaginationRequestDto;
+use App\Application\Dto\UpdateProductRequestDto;
+use App\Infrastructure\Http\Response\SuccessResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
@@ -23,7 +28,10 @@ final class ProductController extends AbstractController
         private readonly FindAllProductsUseCase $findAllProductsUseCase,
         private readonly FindAllProductsByPageUseCase $findAllProductsByPageUseCase,
         private readonly FindProductByIdUseCase $findByIdProductUseCase,
+        private readonly CreateProductUseCase $createProductUseCase,
+        private readonly UpdateProductUseCase $updateProductUseCase,
         private readonly DeleteProductUseCase $deleteProductUseCase,
+
     ) {
     }
 
@@ -64,7 +72,21 @@ final class ProductController extends AbstractController
         return new SuccessResponse($this->serializer, $product);
     }
 
-    #[Route('/api/products/{id}', name: 'app_product_id', methods: ['DELETE'])]
+    #[Route('/api/products', name: 'app_product_create', methods: ['POST'])]
+    public function createProduct(CreateProductRequestDto $createProductRequestDto): JsonResponse
+    {
+        $product = $this->createProductUseCase->execute(ProductMapper::CreateDtoToValueObject($createProductRequestDto));
+        return new SuccessResponse($this->serializer, $product);
+    }
+
+    #[Route('/api/products/{id}', name: 'app_product_update', methods: ['PUT'])]
+    public function updateProduct(string $id, UpdateProductRequestDto $updateProductRequestDto): JsonResponse
+    {
+        $product = $this->updateProductUseCase->execute($id, ProductMapper::UpdateDtoToValueObject($updateProductRequestDto));
+        return new SuccessResponse($this->serializer, $product);
+    }
+
+    #[Route('/api/products/{id}', name: 'app_product_delete', methods: ['DELETE'])]
     public function deleteProduct(string $id): JsonResponse
     {
         $product = $this->deleteProductUseCase->execute($id);
