@@ -6,13 +6,15 @@ namespace App\Application\UseCase\Product;
 
 use App\Domain\Repository\ProductRepository;
 use App\Domain\Entity\Product;
+use App\Domain\Repository\UnitOfWork;
 use App\Application\Exception\NotFoundException;
 use App\Application\ValueObject\ProductValueObject;
 
 class UpdateProductUseCase
 {
     public function __construct(
-        private readonly ProductRepository $productRepository
+        private readonly ProductRepository $productRepository,
+        private readonly UnitOfWork $unitOfWork
     ) {
     }
 
@@ -32,6 +34,8 @@ class UpdateProductUseCase
         $product->update($productValueObject);
 
         $this->productRepository->save($product);
+        $this->unitOfWork->flush();
+
         return $product;
     }
 }

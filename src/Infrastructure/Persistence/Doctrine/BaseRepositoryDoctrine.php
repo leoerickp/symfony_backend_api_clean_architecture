@@ -73,25 +73,17 @@ abstract class BaseRepositoryDoctrine extends ServiceEntityRepository implements
     /**
      * @param T $entity
      */
-    public function save(object $entity, bool $flush = true): void
+    public function save(object $entity): void
     {
         $this->entityManager->persist($entity);
-
-        if ($flush) {
-            $this->entityManager->flush();
-        }
     }
 
     /**
      * @param T $entity
      */
-    public function remove(object $entity, bool $flush = true): void
+    public function remove(object $entity): void
     {
         $this->entityManager->remove($entity);
-
-        if ($flush) {
-            $this->entityManager->flush();
-        }
     }
 
 }

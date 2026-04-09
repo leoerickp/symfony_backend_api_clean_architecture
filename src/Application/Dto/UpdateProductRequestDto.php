@@ -14,7 +14,7 @@ class UpdateProductRequestDto
 
     #[Assert\NotBlank]
     #[Assert\Type(type: 'numeric')]
-    public string $price = '0';
+    public string|float|int $price = '0';
 
     #[Assert\NotBlank]
     public ?string $description = null;
@@ -73,10 +73,10 @@ class UpdateProductRequestDto
     }
 
     /**
-     * @param string $price
+     * @param string|float|int $price
      * @return static
      */
-    public function setPrice(string $price): static
+    public function setPrice(string|float|int $price): static
     {
         $this->price = $price;
         return $this;

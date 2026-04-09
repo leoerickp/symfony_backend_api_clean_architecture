@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Application\UseCase\User;
 
 use App\Domain\Entity\User;
+use App\Domain\Repository\UnitOfWork;
 use App\Domain\Repository\UserRepository;
 use App\Domain\Security\TokenGenerator;
 use App\Domain\Security\PasswordHasher;
@@ -16,6 +17,7 @@ class CreateUserUseCase
         private readonly UserRepository $userRepository,
         private readonly PasswordHasher $passwordHasher,
         private readonly TokenGenerator $tokenGenerator,
+        private readonly UnitOfWork $unitOfWork
     ) {
     }
 
@@ -29,7 +31,9 @@ class CreateUserUseCase
     {
         $user = User::create($fullName, $email, $this->passwordHasher->hash($password));
 
-        $this->userRepository->save($user, true);
+        $this->userRepository->save($user);
+
+        $this->unitOfWork->flush();
 
         return [
             'user' => new UserResponseDto(

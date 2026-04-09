@@ -37,15 +37,12 @@ interface BaseRepository
     public function findById(string $id): ?object;
     /**
      * @param T $entity
-     * @param bool $flush
      * @return void
      */
-    public function save(object $entity, bool $flush = true): void;
+    public function save(object $entity): void;
     /**
      * @param T $entity
-     * @param bool $flush
      * @return void
      */
-    public function remove(object $entity, bool $flush = true): void;
-
+    public function remove(object $entity): void;
 }
