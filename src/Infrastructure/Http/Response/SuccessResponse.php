@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Http\Response;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -8,7 +10,6 @@ use Symfony\Component\Serializer\SerializerInterface;
 class SuccessResponse extends JsonResponse
 {
     /**
-     * Summary of __construct
      * @param SerializerInterface $serializer
      * @param mixed $data
      * @param array<string, mixed> $meta

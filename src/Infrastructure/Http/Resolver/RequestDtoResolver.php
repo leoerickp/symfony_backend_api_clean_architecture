@@ -1,22 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Http\Resolver;
 
 use App\Application\Exception\ValidationException;
-use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+
 
 class RequestDtoResolver implements ValueResolverInterface
 {
     public function __construct(
-        private ValidatorInterface $validator,
+        private readonly ValidatorInterface $validator,
     ) {
     }
 
     /**
-     * Summary of resolve
      * @param Request $request
      * @param ArgumentMetadata $argument
      * @throws ValidationException

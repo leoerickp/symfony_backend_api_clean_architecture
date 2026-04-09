@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Dto;
 
-class ProductPaginationRequestDto
+final readonly class ProductPaginationRequestDto
 {
     public function __construct(
         public int $page = 1,

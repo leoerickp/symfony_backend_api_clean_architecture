@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -25,12 +27,12 @@ class Base
         $this->updateAt = new \DateTimeImmutable();
     }
 
-    public function getId(): ?Uuid
+    public function getId(): string
     {
-        return $this->id;
+        return $this->id->toRfc4122();
     }
 
-    public function getCreateAt(): ?\DateTimeImmutable
+    public function getCreateAt(): \DateTimeImmutable
     {
         return $this->createAt;
     }
@@ -42,7 +44,7 @@ class Base
         return $this;
     }
 
-    public function getUpdateAt(): ?\DateTimeImmutable
+    public function getUpdateAt(): \DateTimeImmutable
     {
         return $this->updateAt;
     }

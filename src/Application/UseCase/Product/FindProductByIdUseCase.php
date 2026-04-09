@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\UseCase\Product;
 
 use App\Domain\Repository\ProductRepository;
@@ -9,12 +11,11 @@ use App\Domain\Entity\Product;
 class FindProductByIdUseCase
 {
     public function __construct(
-        private ProductRepository $productRepository,
+        private readonly ProductRepository $productRepository,
     ) {
     }
 
     /**
-     * Summary of execute
      * @param string $id
      * @throws NotFoundException
      * @return Product
@@ -23,7 +24,7 @@ class FindProductByIdUseCase
     {
         $product = $this->productRepository->findById($id);
         if (!$product) {
-            throw new NotFoundException('Product not found');
+            throw new NotFoundException(sprintf('Product with ID "%s" not found', $id));
         }
         return $product;
     }

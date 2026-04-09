@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Repository;
 
 use App\Domain\Entity\User;
@@ -13,7 +15,6 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 interface UserRepository extends BaseRepository, PasswordUpgraderInterface
 {
     /**
-     * Summary of upgradePassword
      * @param PasswordAuthenticatedUserInterface $user
      * @param string $newHashedPassword
      * @return void
@@ -21,7 +22,6 @@ interface UserRepository extends BaseRepository, PasswordUpgraderInterface
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void;
 
     /**
-     * Summary of findOneByEmail
      * @param string $email
      * @return User|null
      */

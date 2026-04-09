@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Dto;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
 class LoginUserDto
 {
-
     #[Assert\NotBlank]
     #[Assert\Email]
     public string $email;
@@ -15,7 +16,6 @@ class LoginUserDto
     public string $password;
 
     /**
-     * Summary of getEmail
      * @return string
      */
     public function getEmail(): string
@@ -24,18 +24,16 @@ class LoginUserDto
     }
 
     /**
-     * Summary of setEmail
      * @param string $email
-     * @return self
+     * @return static
      */
-    public function setEmail(string $email): self
+    public function setEmail(string $email): static
     {
         $this->email = $email;
         return $this;
     }
 
     /**
-     * Summary of getPassword
      * @return string
      */
     public function getPassword(): string
@@ -44,11 +42,10 @@ class LoginUserDto
     }
 
     /**
-     * Summary of setPassword
      * @param string $password
-     * @return self
+     * @return static
      */
-    public function setPassword(string $password): self
+    public function setPassword(string $password): static
     {
         $this->password = $password;
         return $this;

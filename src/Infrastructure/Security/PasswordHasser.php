@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Security;
 
 use App\Domain\Security\PasswordHasher;
@@ -9,7 +11,7 @@ use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 class PasswordHasser implements PasswordHasher
 {
     public function __construct(
-        private PasswordHasherFactoryInterface $passwordHasherFactory,
+        private readonly PasswordHasherFactoryInterface $passwordHasherFactory,
     ) {
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Entity;
 
 use App\Domain\Entity\Base;
@@ -31,14 +33,12 @@ class Product extends Base
     private ?string $gender = null;
 
     /**
-     * Summary of sizes
      * @var string[]
      */
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     private ?array $sizes = null;
 
     /**
-     * Summary of tags
      * @var string[]|null
      */
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
@@ -129,7 +129,6 @@ class Product extends Base
     }
 
     /**
-     * Summary of getSizes
      * @return string[]|null
      */
     public function getSizes(): ?array
@@ -138,11 +137,10 @@ class Product extends Base
     }
 
     /**
-     * Summary of setSizes
      * @param string[] $sizes
-     * @return self
+     * @return static
      */
-    public function setSizes(array $sizes): self
+    public function setSizes(array $sizes): static
     {
         $this->sizes = $sizes;
 
@@ -150,7 +148,6 @@ class Product extends Base
     }
 
     /**
-     * Summary of getTags
      * @return string[]
      */
     public function getTags(): ?array
@@ -159,11 +156,10 @@ class Product extends Base
     }
 
     /**
-     * Summary of setTags
      * @param string[] $tags
-     * @return self
+     * @return static
      */
-    public function setTags(array $tags): self
+    public function setTags(array $tags): static
     {
         $this->tags = $tags;
 
@@ -179,11 +175,10 @@ class Product extends Base
     }
 
     /**
-     * Summary of addProductImage
      * @param ProductImage $productImage
-     * @return self
+     * @return static
      */
-    public function addProductImage(ProductImage $productImage): self
+    public function addProductImage(ProductImage $productImage): static
     {
         if (!$this->productImages->contains($productImage)) {
             $this->productImages->add($productImage);
@@ -194,11 +189,10 @@ class Product extends Base
     }
 
     /**
-     * Summary of removeProductImage
      * @param ProductImage $productImage
-     * @return self
+     * @return static
      */
-    public function removeProductImage(ProductImage $productImage): self
+    public function removeProductImage(ProductImage $productImage): static
     {
         if ($this->productImages->removeElement($productImage)) {
             // set the owning side to null (unless already changed)
@@ -211,11 +205,10 @@ class Product extends Base
     }
 
     /**
-     * Summary of create
      * @param ProductValueObject $productValueObject
-     * @return self
+     * @return static
      */
-    public static function create(ProductValueObject $productValueObject): self
+    public static function create(ProductValueObject $productValueObject): static
     {
         $product = new self();
         $product->update($productValueObject);
@@ -223,7 +216,6 @@ class Product extends Base
     }
 
     /**
-     * Summary of update
      * @param ProductValueObject $productValueObject
      * @return void
      */

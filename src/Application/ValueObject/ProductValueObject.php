@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\ValueObject;
 
 class ProductValueObject
 {
     /**
-     * Summary of __construct
      * @param string $title
      * @param float $price
      * @param string $description

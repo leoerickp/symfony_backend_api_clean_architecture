@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\UseCase\Auth;
 
 use App\Application\Dto\UserResponseDto;
@@ -9,13 +11,12 @@ use App\Domain\Security\TokenGenerator;
 class LoginUseCase
 {
     public function __construct(
-        private UserRepository $userRepository,
-        private TokenGenerator $tokenGenerator,
+        private readonly UserRepository $userRepository,
+        private readonly TokenGenerator $tokenGenerator,
     ) {
     }
 
     /**
-     * Summary of execute
      * @param string $email
      * @param string $password
      * @return array{token: string, user: UserResponseDto}

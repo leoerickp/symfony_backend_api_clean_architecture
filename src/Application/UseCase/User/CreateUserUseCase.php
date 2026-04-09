@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\UseCase\User;
 
 use App\Domain\Entity\User;
@@ -11,14 +13,13 @@ use App\Application\Dto\UserResponseDto;
 class CreateUserUseCase
 {
     public function __construct(
-        private UserRepository $userRepository,
-        private PasswordHasher $passwordHasher,
-        private TokenGenerator $tokenGenerator,
+        private readonly UserRepository $userRepository,
+        private readonly PasswordHasher $passwordHasher,
+        private readonly TokenGenerator $tokenGenerator,
     ) {
     }
 
     /**
-     * Summary of execute
      * @param string $fullName
      * @param string $email
      * @param string $password

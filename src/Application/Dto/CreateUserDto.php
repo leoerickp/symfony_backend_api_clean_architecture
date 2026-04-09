@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Dto;
 
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,7 +23,7 @@ class CreateUserDto
         return $this->fullName;
     }
 
-    public function setFullName(string $fullName): self
+    public function setFullName(string $fullName): static
     {
         $this->fullName = $fullName;
         return $this;
@@ -32,7 +34,7 @@ class CreateUserDto
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(string $email): static
     {
         $this->email = $email;
         return $this;
@@ -43,7 +45,7 @@ class CreateUserDto
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(string $password): static
     {
         $this->password = $password;
         return $this;

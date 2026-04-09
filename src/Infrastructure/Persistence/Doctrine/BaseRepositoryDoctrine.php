@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Persistence\Doctrine;
 
 use App\Domain\Repository\BaseRepository;
@@ -22,20 +24,20 @@ abstract class BaseRepositoryDoctrine extends ServiceEntityRepository implements
         $this->entityManager = $this->getEntityManager();
     }
 
+    /**
+     * @return array<int, T>
+     */
     public function findAll(): array
     {
-        try {
-            //code...
-            return $this->createQueryBuilder('p')
-                ->orderBy('p.id', 'ASC')
-                ->getQuery()
-                ->getResult();
-        } catch (\Throwable $th) {
-            //throw $th;
-            dd($th->getMessage());
-        }
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 
+    /**
+     * @return array<int, T>
+     */
     public function findAllByPage(
         int $page = 1,
         int $limit = 10,
@@ -56,6 +58,9 @@ abstract class BaseRepositoryDoctrine extends ServiceEntityRepository implements
             ->getResult();
     }
 
+    /**
+     * @return T|null
+     */
     public function findById(string $id): ?object
     {
         return $this->createQueryBuilder('p')
@@ -65,6 +70,9 @@ abstract class BaseRepositoryDoctrine extends ServiceEntityRepository implements
             ->getOneOrNullResult();
     }
 
+    /**
+     * @param T $entity
+     */
     public function save(object $entity, bool $flush = true): void
     {
         $this->entityManager->persist($entity);
@@ -74,6 +82,9 @@ abstract class BaseRepositoryDoctrine extends ServiceEntityRepository implements
         }
     }
 
+    /**
+     * @param T $entity
+     */
     public function remove(object $entity, bool $flush = true): void
     {
         $this->entityManager->remove($entity);

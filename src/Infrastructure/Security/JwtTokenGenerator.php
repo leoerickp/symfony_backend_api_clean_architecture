@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Security;
 
 use App\Domain\Security\TokenGenerator;
@@ -9,7 +11,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 class JwtTokenGenerator implements TokenGenerator
 {
     public function __construct(
-        private JWTTokenManagerInterface $jwtManager,
+        private readonly JWTTokenManagerInterface $jwtManager,
     ) {
     }
 

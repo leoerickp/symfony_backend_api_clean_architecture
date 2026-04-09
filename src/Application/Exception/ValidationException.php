@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Exception;
 
 class ValidationException extends \Exception
 {
     /**
-     * Summary of __construct
      * @param string[] $errors
      * @param string $message
      * @param int $code

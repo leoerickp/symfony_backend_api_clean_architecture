@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Controller;
 
 use App\Application\Dto\CreateUserDto;
@@ -15,7 +17,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 final class AuthController extends AbstractController
 {
     public function __construct(
-        private SerializerInterface $serializer,
+        private readonly SerializerInterface $serializer,
         private readonly LoginUseCase $loginUseCase,
         private readonly CreateUserUseCase $createUserUseCase
     ) {
@@ -31,7 +33,7 @@ final class AuthController extends AbstractController
     #[Route('/api/auth/login', name: 'app_auth_login', methods: ['POST'])]
     public function login(LoginUserDto $loginUserDto): JsonResponse
     {
-        $authenticatedUser = $this->loginUseCase->execute($loginUserDto->getEmail(), $loginUserDto->getPassword());
+        $authenticatedUser = $this->loginUseCase->execute($loginUserDto->email, $loginUserDto->password);
         return new SuccessResponse($this->serializer, $authenticatedUser);
     }
 }

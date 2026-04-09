@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\UseCase\Product;
 
 use App\Domain\Repository\ProductRepository;
@@ -8,12 +10,11 @@ use App\Domain\Entity\Product;
 class FindAllProductsByPageUseCase
 {
     public function __construct(
-        private ProductRepository $productRepository,
+        private readonly ProductRepository $productRepository,
     ) {
     }
 
     /**
-     * Summary of execute
      * @param int $page
      * @param int $limit
      * @param string $orderBy

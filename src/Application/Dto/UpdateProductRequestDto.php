@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Dto;
 
 use Symfony\Component\Validator\Constraints as Assert;
@@ -27,7 +29,6 @@ class UpdateProductRequestDto
     public ?string $gender = null;
 
     /**
-     * Summary of sizes
      * @var string[]|null
      */
     #[Assert\Type(type: 'array')]
@@ -37,7 +38,6 @@ class UpdateProductRequestDto
     public ?array $sizes = null;
 
     /**
-     * Summary of sizes
      * @var string[]|null
      */
     #[Assert\Type(type: 'array')]
@@ -47,7 +47,6 @@ class UpdateProductRequestDto
     public ?array $tags = null;
 
     /**
-     * Summary of getTitle
      * @return string|null
      */
     public function getTitle(): ?string
@@ -56,18 +55,16 @@ class UpdateProductRequestDto
     }
 
     /**
-     * Summary of setTitle
      * @param string|null $title
-     * @return self
+     * @return static
      */
-    public function setTitle(?string $title): self
+    public function setTitle(?string $title): static
     {
         $this->title = $title;
         return $this;
     }
 
     /**
-     * Summary of getPrice
      * @return string
      */
     public function getPrice(): string
@@ -76,18 +73,16 @@ class UpdateProductRequestDto
     }
 
     /**
-     * Summary of setPrice
      * @param string $price
-     * @return self
+     * @return static
      */
-    public function setPrice(string $price): self
+    public function setPrice(string $price): static
     {
         $this->price = $price;
         return $this;
     }
 
     /**
-     * Summary of getDescription
      * @return string|null
      */
     public function getDescription(): ?string
@@ -96,18 +91,16 @@ class UpdateProductRequestDto
     }
 
     /**
-     * Summary of setDescription
      * @param string|null $description
-     * @return self
+     * @return static
      */
-    public function setDescription(?string $description): self
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
         return $this;
     }
 
     /**
-     * Summary of getSlug
      * @return string|null
      */
     public function getSlug(): ?string
@@ -116,18 +109,16 @@ class UpdateProductRequestDto
     }
 
     /**
-     * Summary of setSlug
      * @param string|null $slug
-     * @return self
+     * @return static
      */
-    public function setSlug(?string $slug): self
+    public function setSlug(?string $slug): static
     {
         $this->slug = $slug;
         return $this;
     }
 
     /**
-     * Summary of getStock
      * @return int
      */
     public function getStock(): int
@@ -136,18 +127,16 @@ class UpdateProductRequestDto
     }
 
     /**
-     * Summary of setStock
      * @param int $stock
-     * @return self
+     * @return static
      */
-    public function setStock(int $stock): self
+    public function setStock(int $stock): static
     {
         $this->stock = $stock;
         return $this;
     }
 
     /**
-     * Summary of getGender
      * @return string|null
      */
     public function getGender(): ?string
@@ -156,18 +145,16 @@ class UpdateProductRequestDto
     }
 
     /**
-     * Summary of setGender
      * @param string|null $gender
-     * @return self
+     * @return static
      */
-    public function setGender(?string $gender): self
+    public function setGender(?string $gender): static
     {
         $this->gender = $gender;
         return $this;
     }
 
     /**
-     * Summary of getSizes
      * @return string[]|null
      */
     public function getSizes(): ?array
@@ -176,18 +163,16 @@ class UpdateProductRequestDto
     }
 
     /**
-     * Summary of setSizes
      * @param string[]|null $sizes
-     * @return self
+     * @return static
      */
-    public function setSizes(?array $sizes): self
+    public function setSizes(?array $sizes): static
     {
         $this->sizes = $sizes;
         return $this;
     }
 
     /**
-     * Summary of getTags
      * @return string[]|null
      */
     public function getTags(): ?array
@@ -196,11 +181,10 @@ class UpdateProductRequestDto
     }
 
     /**
-     * Summary of setTags
      * @param string[]|null $tags
-     * @return self
+     * @return static
      */
-    public function setTags(?array $tags): self
+    public function setTags(?array $tags): static
     {
         $this->tags = $tags;
         return $this;

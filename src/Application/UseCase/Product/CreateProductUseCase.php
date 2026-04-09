@@ -1,25 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\UseCase\Product;
 
 use App\Domain\Repository\ProductRepository;
 use App\Domain\Entity\Product;
-use App\Application\Exception\NotFoundException;
 use App\Application\ValueObject\ProductValueObject;
 
 class CreateProductUseCase
 {
     public function __construct(
-        private ProductRepository $productRepository
+        private readonly ProductRepository $productRepository
     ) {
     }
 
     /**
-     * Summary of execute
      * @param ProductValueObject $productValueObject
-     * @return Product|null
+     * @return Product
      */
-    public function execute(ProductValueObject $productValueObject): ?Product
+    public function execute(ProductValueObject $productValueObject): Product
     {
         $product = Product::create($productValueObject);
 

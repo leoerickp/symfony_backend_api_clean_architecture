@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Repository;
 
 /**
@@ -12,7 +14,6 @@ interface BaseRepository
      */
     public function findAll(): array;
     /**
-     * Summary of findAllByPage
      * @param int $page
      * @param int $limit
      * @param string $orderBy
@@ -30,20 +31,17 @@ interface BaseRepository
         ?string $filterValue = null,
     ): array;
     /**
-     * Summary of findById
      * @param string $id
      * @return T|null
      */
     public function findById(string $id): ?object;
     /**
-     * Summary of save
      * @param T $entity
      * @param bool $flush
      * @return void
      */
     public function save(object $entity, bool $flush = true): void;
     /**
-     * Summary of remove
      * @param T $entity
      * @param bool $flush
      * @return void

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Controller;
 
 use App\Application\Dto\CreateProductRequestDto;
@@ -24,7 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
 final class ProductController extends AbstractController
 {
     public function __construct(
-        private SerializerInterface $serializer,
+        private readonly SerializerInterface $serializer,
         private readonly FindAllProductsUseCase $findAllProductsUseCase,
         private readonly FindAllProductsByPageUseCase $findAllProductsByPageUseCase,
         private readonly FindProductByIdUseCase $findByIdProductUseCase,
@@ -89,7 +91,7 @@ final class ProductController extends AbstractController
     #[Route('/api/products/{id}', name: 'app_product_delete', methods: ['DELETE'])]
     public function deleteProduct(string $id): JsonResponse
     {
-        $product = $this->deleteProductUseCase->execute($id);
-        return new SuccessResponse($this->serializer, $product);
+        $this->deleteProductUseCase->execute($id);
+        return new SuccessResponse($this->serializer, sprintf('Product with ID "%s" deleted successfully', $id));
     }
 }

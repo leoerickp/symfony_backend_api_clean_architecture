@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\UseCase\Product;
 
 use App\Domain\Repository\ProductRepository;
@@ -8,7 +10,7 @@ use App\Domain\Entity\Product;
 class FindAllProductsUseCase
 {
     public function __construct(
-        private ProductRepository $productRepository,
+        private readonly ProductRepository $productRepository,
     ) {
     }
 

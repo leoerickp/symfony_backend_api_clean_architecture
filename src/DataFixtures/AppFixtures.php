@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -14,7 +16,7 @@ use App\Data\ProductData;
 class AppFixtures extends Fixture
 {
     public function __construct(
-        private PasswordHasher $passwordHasher,
+        private readonly PasswordHasher $passwordHasher,
     ) {
     }
 

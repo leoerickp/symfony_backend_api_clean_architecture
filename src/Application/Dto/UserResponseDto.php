@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Dto;
 
-class UserResponseDto
+final readonly class UserResponseDto
 {
     /**
-     * Summary of __construct
      * @param string $id
      * @param string $fullName
      * @param string $email
