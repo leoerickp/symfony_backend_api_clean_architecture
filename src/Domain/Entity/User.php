@@ -37,6 +37,7 @@ class User extends Base implements UserInterface, PasswordAuthenticatedUserInter
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Ignore]
     private ?string $password = null;
     /**
      * @var Collection<int, Product>
@@ -82,6 +83,7 @@ class User extends Base implements UserInterface, PasswordAuthenticatedUserInter
      * @see UserInterface
      * @return non-empty-string
      */
+    #[Ignore]
     public function getUserIdentifier(): string
     {
         return $this->email;
