@@ -46,6 +46,7 @@ The outermost layer. It contains the concrete implementations of interfaces defi
 ## 🛡 Best Practices & Patterns Applied
 
 - **Dependency Inversion Principle (SOLID)**: Use Cases and Controllers depend on interfaces, while Infrastructure implements them.
+- **Unit of Work Pattern**: Database transactions are efficiently managed at the Application layer across multiple Repositories. Persistence (`save`/`remove`) is decoupled from database commits (`flush()`), guaranteeing atomicity and reducing I/O latency inside Use Cases.
 - **CQRS Mindset**: Separation of read operations (Queries) and write operations (Commands/Use Cases).
 - **Global Exception Handling**: Dedicated `ApiExceptionListener` mapped in Infrastructure to gracefully capture and format exceptions into uniform JSON API responses.
 - **Automatic DTO Mapping**: `RequestDtoResolver` injects validated request bodies directly into controller actions enforcing declarative structural typing.
