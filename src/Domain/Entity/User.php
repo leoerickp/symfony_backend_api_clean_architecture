@@ -6,6 +6,9 @@ namespace App\Domain\Entity;
 
 use App\Domain\Entity\Base;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -35,6 +38,18 @@ class User extends Base implements UserInterface, PasswordAuthenticatedUserInter
      */
     #[ORM\Column]
     private ?string $password = null;
+    /**
+     * @var Collection<int, Product>
+     */
+    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'user')]
+    #[Ignore]
+    private Collection $products;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->products = new ArrayCollection();
+    }
 
     public function getFullName(): ?string
     {
@@ -117,6 +132,44 @@ class User extends Base implements UserInterface, PasswordAuthenticatedUserInter
         $data["\0" . self::class . "\0password"] = hash('crc32c', $this->password);
 
         return $data;
+    }
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    /**
+     * @param Product $product
+     * @return static
+     */
+    public function addProduct(Product $product): static
+    {
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+            $product->setUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Product $product
+     * @return static
+     */
+    public function removeProduct(Product $product): static
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getUser() === $this) {
+                $product->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
     static function create(string $fullName, string $email, string $password): self

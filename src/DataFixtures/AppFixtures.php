@@ -26,12 +26,19 @@ class AppFixtures extends Fixture
 
         $users = UserData::get();
 
-        foreach ($users as $data) {
+        $adminUser = null;
+
+        foreach ($users as $index => $data) {
             $user = new User();
             $user->setEmail($data['email']);
             $user->setFullName($data['fullName']);
             $user->setPassword($this->passwordHasher->hash($data['password']));
             $user->setRoles($data['roles']);
+
+            if ($index === 0) {
+                $adminUser = $user;
+            }
+
             $manager->persist($user);
         }
 
@@ -39,13 +46,14 @@ class AppFixtures extends Fixture
             $product = new Product();
 
             $product->setTitle($data['title']);
-            $product->setPrice($data['price']);
+            $product->setPrice((string) $data['price']);
             $product->setDescription($data['description']);
             $product->setSlug($data['slug']);
             $product->setStock($data['stock']);
             $product->setSizes($data['sizes']);
             $product->setTags($data['tags']);
             $product->setGender($data['gender']);
+            $product->setUser($adminUser);
 
             $manager->persist($product);
 

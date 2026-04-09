@@ -77,14 +77,16 @@ final class ProductController extends AbstractController
     #[Route('/api/products', name: 'app_product_create', methods: ['POST'])]
     public function createProduct(CreateProductRequestDto $createProductRequestDto): JsonResponse
     {
-        $product = $this->createProductUseCase->execute(ProductMapper::CreateDtoToValueObject($createProductRequestDto));
+        $user = $this->getUser();
+        $product = $this->createProductUseCase->execute(ProductMapper::CreateDtoToValueObject($createProductRequestDto), $user);
         return new SuccessResponse($this->serializer, $product);
     }
 
     #[Route('/api/products/{id}', name: 'app_product_update', methods: ['PUT'])]
     public function updateProduct(string $id, UpdateProductRequestDto $updateProductRequestDto): JsonResponse
     {
-        $product = $this->updateProductUseCase->execute($id, ProductMapper::UpdateDtoToValueObject($updateProductRequestDto));
+        $user = $this->getUser();
+        $product = $this->updateProductUseCase->execute($id, ProductMapper::UpdateDtoToValueObject($updateProductRequestDto), $user);
         return new SuccessResponse($this->serializer, $product);
     }
 

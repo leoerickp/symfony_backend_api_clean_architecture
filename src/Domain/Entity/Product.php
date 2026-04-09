@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity]
 class Product extends Base
 {
@@ -47,8 +48,12 @@ class Product extends Base
     /**
      * @var Collection<int, ProductImage>
      */
-    #[ORM\OneToMany(targetEntity: ProductImage::class, mappedBy: 'product')]
+    #[ORM\OneToMany(targetEntity: ProductImage::class, mappedBy: 'product', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $productImages;
+
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    //#[MaxDepth(1)]
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -75,6 +80,9 @@ class Product extends Base
 
     public function setPrice(string $price): static
     {
+        if (!is_numeric($price)) {
+            throw new \InvalidArgumentException('Invalid price');
+        }
         $this->price = $price;
 
         return $this;
@@ -204,14 +212,26 @@ class Product extends Base
         return $this;
     }
 
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
     /**
      * @param ProductValueObject $productValueObject
      * @return static
      */
-    public static function create(ProductValueObject $productValueObject): static
+    public static function create(ProductValueObject $productValueObject, User $user): static
     {
         $product = new self();
-        $product->update($productValueObject);
+        $product->update($productValueObject, $user);
         return $product;
     }
 
@@ -219,7 +239,7 @@ class Product extends Base
      * @param ProductValueObject $productValueObject
      * @return void
      */
-    public function update(ProductValueObject $productValueObject)
+    public function update(ProductValueObject $productValueObject, User $user)
     {
         $this->setTitle($productValueObject->title);
         $this->setPrice((string) $productValueObject->price);
@@ -229,5 +249,6 @@ class Product extends Base
         $this->setGender($productValueObject->gender);
         $this->setSizes($productValueObject->sizes);
         $this->setTags($productValueObject->tags);
+        $this->setUser($user);
     }
 }

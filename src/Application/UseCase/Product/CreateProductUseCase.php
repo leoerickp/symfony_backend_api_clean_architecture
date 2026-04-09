@@ -6,6 +6,7 @@ namespace App\Application\UseCase\Product;
 
 use App\Domain\Repository\ProductRepository;
 use App\Domain\Entity\Product;
+use App\Domain\Entity\User;
 use App\Domain\Repository\UnitOfWork;
 use App\Application\ValueObject\ProductValueObject;
 
@@ -21,9 +22,9 @@ class CreateProductUseCase
      * @param ProductValueObject $productValueObject
      * @return Product
      */
-    public function execute(ProductValueObject $productValueObject): Product
+    public function execute(ProductValueObject $productValueObject, User $user): Product
     {
-        $product = Product::create($productValueObject);
+        $product = Product::create($productValueObject, $user);
 
         $this->productRepository->save($product);
         $this->unitOfWork->flush();
