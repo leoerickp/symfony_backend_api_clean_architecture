@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http\Response;
 
+use App\Domain\Enum\ApiErrorCode;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ErrorResponse extends JsonResponse
@@ -14,14 +15,14 @@ class ErrorResponse extends JsonResponse
      * @param int $status
      */
     public function __construct(
-        string $message = 'Validation failed',
+        ?string $message = null,
         array $errors = [],
-        int $status = 400
+        ?int $status = null
     ) {
         parent::__construct([
             'success' => false,
-            'statusCode' => $status,
-            'message' => $message,
+            'statusCode' => $status ?? ApiErrorCode::BAD_REQUEST->getHttpStatusCode(),
+            'message' => $message ?? ApiErrorCode::BAD_REQUEST->value,
             'errors' => $errors
         ], $status);
     }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Exception;
 
+use App\Domain\Enum\ApiErrorCode;
+
 class ValidationException extends \Exception
 {
     /**
@@ -13,9 +15,9 @@ class ValidationException extends \Exception
      */
     public function __construct(
         public array $errors = [],
-        string $message = 'BAD_REQUEST',
-        int $code = 400
+        ?string $message = null,
+        ?int $code = null
     ) {
-        parent::__construct($message, $code);
+        parent::__construct($message ?? ApiErrorCode::BAD_REQUEST->value, $code ?? ApiErrorCode::BAD_REQUEST->getHttpStatusCode());
     }
 }

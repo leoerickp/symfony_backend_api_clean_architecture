@@ -6,6 +6,7 @@ namespace App\Infrastructure\Http\Listener;
 
 use App\Application\Exception\ValidationException;
 use App\Application\Exception\NotFoundException;
+use App\Domain\Enum\ApiErrorCode;
 use App\Infrastructure\Http\Response\ErrorResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,9 +30,9 @@ class ExceptionListener
 
         if ($exception instanceof NotFoundException) {
             $event->setResponse(new ErrorResponse(
-                'NOT_FOUND',
+                ApiErrorCode::NOT_FOUND->value,
                 [$exception->getMessage()],
-                Response::HTTP_NOT_FOUND
+                ApiErrorCode::NOT_FOUND->getHttpStatusCode()
             ));
             return;
         }
@@ -49,11 +50,11 @@ class ExceptionListener
         // DUPLICATE ENTRY (UNIQUE constraint)
         if ($exception instanceof UniqueConstraintViolationException) {
             $event->setResponse(new ErrorResponse(
-                'DUPLICATE_RESOURCE',
+                ApiErrorCode::DUPLICATE_ENTRY->value,
                 [
                     'message' => 'This record already exists'
                 ],
-                409
+                ApiErrorCode::DUPLICATE_ENTRY->getHttpStatusCode()
             ));
             return;
         }
@@ -61,11 +62,11 @@ class ExceptionListener
         // FOREIGN KEY ERROR
         if ($exception instanceof ForeignKeyConstraintViolationException) {
             $event->setResponse(new ErrorResponse(
-                'FOREIGN_KEY_ERROR',
+                ApiErrorCode::FOREIGN_KEY_ERROR->value,
                 [
                     'message' => 'Cannot delete or update because it is linked to other records'
                 ],
-                409
+                ApiErrorCode::FOREIGN_KEY_ERROR->getHttpStatusCode()
             ));
             return;
         }
@@ -73,9 +74,9 @@ class ExceptionListener
         // GENERIC DB ERROR
         if ($exception instanceof \Doctrine\DBAL\Exception) {
             $event->setResponse(new ErrorResponse(
-                'DATABASE_ERROR',
+                ApiErrorCode::DATABASE_ERROR->value,
                 [],
-                500
+                ApiErrorCode::DATABASE_ERROR->getHttpStatusCode()
             ));
             return;
         }
@@ -83,18 +84,18 @@ class ExceptionListener
 
         // fallback general
         $event->setResponse(new ErrorResponse(
-            'INTERNAL_SERVER_ERROR',
+            ApiErrorCode::INTERNAL_SERVER_ERROR->value,
             [$exception->getMessage()],
-            500
+            ApiErrorCode::INTERNAL_SERVER_ERROR->getHttpStatusCode()
         ));
     }
 
     private function getMessage(int $statusCode): string
     {
         return match ($statusCode) {
-            401 => 'UNAUTHORIZED',
-            403 => 'FORBIDDEN',
-            404 => 'RESOURCE_NOT_FOUND',
+            ApiErrorCode::UNAUTHORIZED->getHttpStatusCode() => ApiErrorCode::UNAUTHORIZED->value,
+            ApiErrorCode::FORBIDDEN->getHttpStatusCode() => ApiErrorCode::FORBIDDEN->value,
+            ApiErrorCode::NOT_FOUND->getHttpStatusCode() => ApiErrorCode::NOT_FOUND->value,
             default => 'HTTP_ERROR',
         };
     }
