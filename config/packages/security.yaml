@@ -58,6 +58,7 @@ security:
         # público
         - { path: ^/api/auth, roles: PUBLIC_ACCESS }
         - { path: ^/api/files, roles: PUBLIC_ACCESS }
+        - { path: ^/api/products, roles: PUBLIC_ACCESS }
 
         # protegido
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }

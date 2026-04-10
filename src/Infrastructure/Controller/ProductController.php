@@ -22,7 +22,6 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 
-#[IsGranted('ROLE_USER')]
 final class ProductController extends AbstractController
 {
     public function __construct(
@@ -37,6 +36,7 @@ final class ProductController extends AbstractController
     ) {
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/api/products', name: 'app_product', methods: ['GET'])]
     public function getAllProducts(): JsonResponse
     {
@@ -74,6 +74,7 @@ final class ProductController extends AbstractController
         return new SuccessResponse($this->serializer, $product);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/api/products', name: 'app_product_create', methods: ['POST'])]
     public function createProduct(CreateProductRequestDto $createProductRequestDto): JsonResponse
     {
@@ -82,6 +83,7 @@ final class ProductController extends AbstractController
         return new SuccessResponse($this->serializer, $product);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/api/products/{id}', name: 'app_product_update', methods: ['PUT'])]
     public function updateProduct(string $id, UpdateProductRequestDto $updateProductRequestDto): JsonResponse
     {
@@ -90,6 +92,7 @@ final class ProductController extends AbstractController
         return new SuccessResponse($this->serializer, $product);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/api/products/{id}', name: 'app_product_delete', methods: ['DELETE'])]
     public function deleteProduct(string $id): JsonResponse
     {
