@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Application\Exception;
 
 use App\Domain\Enum\ApiErrorCode;
-use Exception;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class DatabaseUnavailableException extends Exception
+class DatabaseUnavailableException extends HttpException
 {
     public function __construct(?string $message = null)
     {
-        parent::__construct($message ?? ApiErrorCode::DATABASE_ERROR->value, ApiErrorCode::DATABASE_ERROR->getHttpStatusCode());
+        parent::__construct(ApiErrorCode::DATABASE_ERROR->getHttpStatusCode(), $message ?? ApiErrorCode::DATABASE_ERROR->value);
     }
 }

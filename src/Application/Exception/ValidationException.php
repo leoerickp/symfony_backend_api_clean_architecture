@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Application\Exception;
 
 use App\Domain\Enum\ApiErrorCode;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class ValidationException extends \Exception
+class ValidationException extends HttpException
 {
     /**
      * @param string[] $errors
@@ -18,6 +19,6 @@ class ValidationException extends \Exception
         ?string $message = null,
         ?int $code = null
     ) {
-        parent::__construct($message ?? ApiErrorCode::BAD_REQUEST->value, $code ?? ApiErrorCode::BAD_REQUEST->getHttpStatusCode());
+        parent::__construct(ApiErrorCode::BAD_REQUEST->getHttpStatusCode(), $message ?? ApiErrorCode::BAD_REQUEST->value);
     }
 }
