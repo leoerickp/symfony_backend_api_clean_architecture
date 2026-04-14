@@ -47,6 +47,15 @@ class CreateProductRequestDto
     public ?array $tags = null;
 
     /**
+     * @var string[]|null
+     */
+    #[Assert\Type(type: 'array')]
+    #[Assert\All([
+        new Assert\Type(type: 'string')
+    ])]
+    public ?array $images = null;
+
+    /**
      * @return string|null
      */
     public function getTitle(): ?string
@@ -187,6 +196,24 @@ class CreateProductRequestDto
     public function setTags(?array $tags): static
     {
         $this->tags = $tags;
+        return $this;
+    }
+
+    /**
+     * @return string[]|null
+     */
+    public function getImages(): ?array
+    {
+        return $this->images;
+    }
+
+    /**
+     * @param string[]|null $images
+     * @return static
+     */
+    public function setImages(?array $images): static
+    {
+        $this->images = $images;
         return $this;
     }
 }

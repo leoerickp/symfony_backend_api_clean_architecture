@@ -15,6 +15,7 @@ class ProductValueObject
      * @param string $gender
      * @param string[] $sizes
      * @param string[] $tags
+     * @param string[] $images
      */
     public function __construct(
         public string $title,
@@ -24,7 +25,8 @@ class ProductValueObject
         public int $stock,
         public string $gender,
         public array $sizes,
-        public array $tags
+        public array $tags,
+        public array $images
     ) {
     }
 }

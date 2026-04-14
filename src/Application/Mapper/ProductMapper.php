@@ -20,7 +20,8 @@ class ProductMapper
             $dto->stock,
             $dto->gender,
             $dto->sizes,
-            $dto->tags
+            $dto->tags,
+            $dto->images,
         );
     }
     public static function UpdateDtoToValueObject(UpdateProductRequestDto $dto): ProductValueObject
@@ -33,7 +34,8 @@ class ProductMapper
             $dto->stock,
             $dto->gender,
             $dto->sizes,
-            $dto->tags
+            $dto->tags,
+            $dto->images,
         );
     }
 }

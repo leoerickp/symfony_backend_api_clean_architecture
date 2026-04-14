@@ -42,4 +42,11 @@ class ProductImage extends Base
 
         return $this;
     }
+
+    public static function create(string $url): static
+    {
+        $productImage = new self();
+        $productImage->setUrl($url);
+        return $productImage;
+    }
 }

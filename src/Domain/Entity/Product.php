@@ -239,7 +239,7 @@ class Product extends Base
      * @param ProductValueObject $productValueObject
      * @return void
      */
-    public function update(ProductValueObject $productValueObject, User $user)
+    public function update(ProductValueObject $productValueObject, ?User $user = null): void
     {
         $this->setTitle($productValueObject->title);
         $this->setPrice((string) $productValueObject->price);
@@ -249,6 +249,39 @@ class Product extends Base
         $this->setGender($productValueObject->gender);
         $this->setSizes($productValueObject->sizes);
         $this->setTags($productValueObject->tags);
-        $this->setUser($user);
+        if ($user !== null) {
+            $this->setUser($user);
+        }
+
+        if ($productValueObject->images !== null) {
+            $this->syncImages($productValueObject->images);
+        }
+    }
+
+    private function syncImages(array $images): void
+    {
+        // 1. Get current imagges
+        $currentImages = $this->productImages->toArray();
+
+        // 2. Create list of new URLs/identifiers
+        $newImageValues = array_map(fn($img) => (string) $img, $images);
+
+        // 3. Delete those that no longer exist
+        foreach ($currentImages as $currentImage) {
+            if (!\in_array($currentImage->getUrl(), $newImageValues)) {
+                $this->removeProductImage($currentImage);
+            }
+        }
+
+        // 4. Add new images
+        foreach ($newImageValues as $image) {
+            $exists = $this->productImages->exists(
+                fn($key, $img) => $img->getUrl() === $image
+            );
+
+            if (!$exists) {
+                $this->addProductImage(ProductImage::create($image));
+            }
+        }
     }
 }

@@ -25,14 +25,14 @@ class UpdateProductUseCase
      * @throws NotFoundException
      * @return Product
      */
-    public function execute(string $id, ProductValueObject $productValueObject, User $user): Product
+    public function execute(string $id, ProductValueObject $productValueObject): Product
     {
         $product = $this->productRepository->findById($id);
         if (!$product) {
             throw new NotFoundException(sprintf('Product with ID "%s" not found', $id));
         }
 
-        $product->update($productValueObject, $user);
+        $product->update($productValueObject);
 
         $this->productRepository->save($product);
         $this->unitOfWork->flush();

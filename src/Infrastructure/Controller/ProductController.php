@@ -87,8 +87,7 @@ final class ProductController extends AbstractController
     #[Route('/api/products/{id}', name: 'app_product_update', methods: ['PUT'])]
     public function updateProduct(string $id, UpdateProductRequestDto $updateProductRequestDto): JsonResponse
     {
-        $user = $this->getUser();
-        $product = $this->updateProductUseCase->execute($id, ProductMapper::UpdateDtoToValueObject($updateProductRequestDto), $user);
+        $product = $this->updateProductUseCase->execute($id, ProductMapper::UpdateDtoToValueObject($updateProductRequestDto));
         return new SuccessResponse($this->serializer, $product);
     }
 
@@ -97,6 +96,6 @@ final class ProductController extends AbstractController
     public function deleteProduct(string $id): JsonResponse
     {
         $this->deleteProductUseCase->execute($id);
-        return new SuccessResponse($this->serializer, sprintf('Product with ID "%s" deleted successfully', $id));
+        return new SuccessResponse($this->serializer, \sprintf('Product with ID "%s" deleted successfully', $id));
     }
 }
