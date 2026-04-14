@@ -117,6 +117,25 @@ To run this application locally, you will need:
     symfony server:start -d
     ```
 
+## 📡 API Endpoints
+
+### Auth
+- `POST /api/auth/register` - Register a new user
+- `POST /api/auth/login` - Authenticate and retrieve a JWT token
+- `GET /api/auth/check-status` - Retrieve current authenticated user details *(Requires: `ROLE_USER`)*
+
+### Products
+- `GET /api/products` - Get all products *(Requires: `ROLE_USER`)*
+- `GET /api/products/by-page` - Get paginated products
+- `GET /api/products/{id}` - Get product by ID
+- `POST /api/products` - Create a new product *(Requires: `ROLE_USER`)*
+- `PUT /api/products/{id}` - Update an existing product *(Requires: `ROLE_USER`)*
+- `DELETE /api/products/{id}` - Delete a product *(Requires: `ROLE_USER`)*
+
+### Files (Images)
+- `POST /api/files/product` - Upload a new product image *(Requires: `ROLE_ADMIN`)*
+- `GET /api/files/product/{imageName}` - Retrieve a static product image by filename
+
 ## 🧪 Useful Commands
 
 - **Clear Cache:**
