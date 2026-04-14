@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class FilesController extends AbstractController
 {
@@ -23,6 +24,7 @@ final class FilesController extends AbstractController
     ) {
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/api/files/product', name: 'app_files_product', methods: ['POST'])]
     public function uploadProductImage(Request $request): JsonResponse
     {
